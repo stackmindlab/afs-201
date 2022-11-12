@@ -26,20 +26,16 @@ def get_discount_value(product_price):
     elif(product_price > price_one):
         discount_percentage = .15
     discount_value = product_price * discount_percentage
-
-    print(f"the discount price is {discount_value}")
     return discount_value
 
 def calculate_state_tax(total_purchase):
     #CALCULATE THE STATE TAX AFTER CALCULATING THE TOTAL_PURCHASE PRICE.
     sales_tax = float(0.065)
     sales_tax_value = sales_tax * total_purchase
-    print("From tax calculate functin")
     return sales_tax_value
 
 def total_amount(total_amount):
     #RECEIPT FUNCTION TO PRINT NICELY. (MAYBE NOT USED IN FINAL SUBMISSION).
-    print(total_amount)
     return f"${format_number(total_amount, 1)}"
 
 def print_receipt(qty, description, price, sales_tax, total_due, total_saved):
