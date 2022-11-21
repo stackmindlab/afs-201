@@ -19,7 +19,7 @@ def random_word_generator():
 
 def show_board():
     #Prints the current board state.
-    print(wordBoard)
+    print(" ".join(wordBoard))
 
 def return_next_index_duplicate(word, letter, board):
     for x in range(len(word)):
@@ -28,7 +28,7 @@ def return_next_index_duplicate(word, letter, board):
         
 def check_guess(guessed_letter):
     global user_guesses_list_of_indexes
-    user_guesses_list.append(guessed_letter)
+    #user_guesses_list.append(guessed_letter)
 
     position_of_found_letter = secret_word.find(guessed_letter.upper())
 
@@ -65,27 +65,37 @@ def check_for_board_win(word, board):
 def init():
     player_win = False
     user_chance_variable = 5
+    negative_string = "No"
     while(user_chance_variable > 0 and player_win != True ):
-        user_guess = input("Can you guess the secret word? ")
+        user_guess = input("Can you guess the secret word? ").upper()
         letter_in_secert_word = check_guess(user_guess.upper())
         dict = {"letter_count": secret_word.count(user_guess.upper())}
+        
         if(letter_in_secert_word == False):
+            if(user_guess in user_guesses_list):
+                print(f"You already guessed that letter{user_guess.upper()}")
+                continue
             user_chance_variable -= 1
-            message_function('No',user_chance_variable, user_guess, secret_word)
+            message_function(negative_string,user_chance_variable, user_guess, secret_word)
+            # user_guesses_list.append(user_guess.upper())
+
         else:
-            
+            if(user_guess in user_guesses_list):
+                print(f"You already guessed that letter{user_guess.upper()}")
+                continue
             if(dict["letter_count"] > 1):
                 print(f"""Yes there are {dict["letter_count"]} {user_guess.upper()}'s""")
             else:
                 print(f"Yes there is a {user_guess}!")
             show_board()
+            
             winner_found = check_for_board_win(secret_word, wordBoard)
             if(winner_found == True):
                 player_win = True
-                print("You Won!")
-                print(secret_word.split())
-                print(check_for_board_win(secret_word, wordBoard))
- 
+                print("You Won the secret word was!")
+                print("".join(secret_word))
+        user_guesses_list.append(user_guess.upper())
+            
 init()
 
      
