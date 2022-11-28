@@ -1,46 +1,51 @@
 import random
 
-class die():
-    def __init__(self):
-        pass
-        
+class Die():
+    def __init__(self, sides = 6):
+        self.sides = sides
+        self.currentFaceValue = None
+
     def roll(self):
-        return random.randint(1, 6)
+        self.currentFaceValue = random.randint(1, self.sides)
 
     def getCurrentFaceValue(self):
-        return self.roll()
+        if self.currentFaceValue == None:
+            self.roll()
+        return self.currentFaceValue
 
     def showDieFace(self):
-        print(self.getCurrentFaceValue())
-    
-def add_icon(num):
-    match num:
-        case 1:
-            return f"⚀ ({num})"
-        case 2:
-            return f"⚁ ({num})"
-        case 3:
-            return f"⚂ ({num})"
-        case 4:
-            return f"⚃ ({num})"
-        case 5:
-            return f"⚄ ({num})"
-        case 6:
-            return f"⚅ ({num})"
-    
+        match self.currentFaceValue:
+            case 1:
+                return f"⚀ ({self.currentFaceValue})"
+            case 2:
+                return f"⚁ ({self.currentFaceValue})"
+            case 3:
+                return f"⚂ ({self.currentFaceValue})"
+            case 4:
+                return f"⚃ ({self.currentFaceValue})"
+            case 5:
+                return f"⚄ ({self.currentFaceValue})"
+            case 6:
+                return f"⚅ ({self.currentFaceValue})"
+
 
 
 def check_for_yahtzee(array):
-    if(array[0] == array[1] == array[2] == array[3] == array[4]):
+    if(array[0].getCurrentFaceValue() == array[1].getCurrentFaceValue() == 
+    array[2].getCurrentFaceValue() == array[3].getCurrentFaceValue() == array[4].getCurrentFaceValue()):
         return True
 
 
 def roll_five():
-    start_game = die()
-    yahtzee_digits = [ start_game.getCurrentFaceValue() for x in range(5)]
-    transformed_list = list(map(add_icon, yahtzee_digits))
-    print(" ".join(transformed_list))
-    if(check_for_yahtzee(yahtzee_digits)):
+    joined_die = []
+    listOfDice = [Die(), Die(), Die(), Die(), Die()]
+    
+    for die in listOfDice:
+        die.roll()
+        joined_die.append(die.showDieFace())
+    print(" ".join(joined_die))
+
+    if(check_for_yahtzee(listOfDice)):
         print("YAHTZEE")
     
 
